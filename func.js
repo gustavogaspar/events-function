@@ -47,7 +47,7 @@ async function getObjectAndSend(eventPayload, provider) {
     return "Couldn't fetch object"
   }
   console.log("[Object Response] - ", true)
-  let fileContent = await readAndSend(getObjectResponse.value, "ocid1.compartment.oc1..aaaaaaaaesacn2nmdoigg7ytxswgnjhhb6xzqned3oioqqhozrrnzxqlzbta", streamClient, streamAdminClient)
+  let fileContent = await readAndSend(getObjectResponse.value, eventPayload.data.compartmentId, streamClient, streamAdminClient)
   console.log("[File Content] - ",fileContent)
   await publishMessage(fileContent, eventPayload.data.compartmentId ,streamClient, streamAdminClient)
   return "[Message Delivered Successfully]"
@@ -60,7 +60,7 @@ async function readAndSend(file) {
   file.on("data", function (data) {
     fileData += data.toString();
   });
-  await delay(1);
+  await delay(2);
   return fileData    
 }
 
